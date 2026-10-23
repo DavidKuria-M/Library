@@ -1,18 +1,21 @@
 let myLibrary = [];
 
 
-function Book(title, author, pages, read, notes) {
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.notes = notes;
-};
+class Book{
 
-Book.prototype.toggleReadStatus = function () {
-    this.read = !this.read;
-};
+    constructor(title, author, pages, read, notes){
+        this.id = crypto.randomUUID();
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.notes = notes;
+    }
+
+    toggleReadStatus(){
+        this.read = !this.read;
+    }
+}
 
 const booksContainer = document.getElementById('books-container');
 const libraryCount = document.getElementById('library-count');
@@ -97,7 +100,7 @@ function openBookModal() {
         const bookExists = myLibrary.some(book => book.title.toLowerCase() === title.toLowerCase());
 
         if(bookExists){
-            alert('${title} is already in your library');
+            alert(`${title} is already in your library`);
             return;
         }
         //debugging purposes
@@ -167,7 +170,7 @@ function removeBook(id){
 function toggleReadStatus(id){
     const book = myLibrary.find(book => book.id === id);
     if(book){
-        book.read = !book.read;
+        book.toggleReadStatus();
         displayBooks();
     }
 }
